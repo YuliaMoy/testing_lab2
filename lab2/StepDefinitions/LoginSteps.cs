@@ -12,12 +12,14 @@ namespace YourProjectNamespace
     {
         private IWebDriver driver;
         private LoginPage loginPage;
+        public int num;
 
         public LoginSteps()
         {
             // Ініціалізуємо драйвер у конструкторі
             driver = new ChromeDriver(); // Ви можете вибрати інший драйвер за потребою
             loginPage = new LoginPage(driver);
+            num = 0;
         }
 
         [Given(@"I am on the banking website")]
@@ -26,75 +28,39 @@ namespace YourProjectNamespace
             loginPage.OpenLoginPage("https://www.globalsqa.com/angularJs-protractor/BankingProject"); // Замініть URL на реальний URL вашого веб-сайту
         }
 
-        [When(@"I select ""Login as User"" option")]
-        public void WhenISelectLoginAsUserOption()
+        [When(@"I select ""Login as Bank Manager"" option")]
+        public void WhenISelectLoginAsBankManagerOption()
         {
-            loginPage.ClickLoginAsUser();
+            loginPage.ClickLoginAsBankManager();
         }
 
-        [When(@"I select ""Hermoine Granger"" as a customer")]
-
-        public void WhenISelectHarryPotter() {
-            loginPage.SelectCustomer("Hermoine Granger");
+        [Then(@"I click ""Open Account""")]
+        public void OpenAccount()
+        {
+            loginPage.clickOpenAccount();
         }
 
-        [When(@"I click Login button")]
-
-        public void WhenIClickLoginButton()
+        [Then(@"I choose Customer and Currency")]
+        public void ChooseCustomerAndCurrency()
         {
-            loginPage.ClickLogin();
+            loginPage.chooseCustomerAndCurrency("Harry Potter", "Rupee");
         }
 
-        [Then(@"I should be on the bank's home page")]
-        public void ThenIShouldSeeTheMainDivBlock()
+        [When(@"I click button Process")]
+        public void Clickprocess()
         {
-            bool isMainDivVisible = loginPage.IsWelcomeTextVisible();
-            Assert.IsTrue(isMainDivVisible, "The 'mainBox' block is not visible.");
+            loginPage.process();
         }
 
-        [When(@"I click the Withdrawl button")]
-
-        public void WhenIClickWithdraw()
+        [Then(@"I should see alert about opening account")]
+        public void ClickOKAlert()
         {
-            loginPage.OpenWithdrawMenu();
+            loginPage.clickOk();
         }
 
-        [When(@"I enter the withdrawal amount as full sum / 2")]
-        public void EnterAmount()
-        {
-            loginPage.EnterAmount();
-        }
-
-        [When(@"I click the ""Confirm Withdrawal"" button")]
-        public void ConfirmWithdraw()
-        {
-            loginPage.ClickWithdraw();
-        }
-
-        [Then(@"I should see a success message")]
-        public void ThenIShouldSeeASucseedMessage()
-        {
-            loginPage.IsSucseedTextVisible();
-        }
-
-        [When(@"I enter the withdrawal amount as full sum x 2")]
-
-        public void EnterMoreAmount()
-        {
-            loginPage.EnterMoreAmount();
-        }
-
-        [When(@"I click the ""Confirm Withdrawal"" button again")]
-
-        public void ClickWithdrawAgain()
-        {
-            loginPage.ClickWithdraw();
-        }
-
-        [Then(@"I should see an error message")]
-        public void ThenIShoulSeeAnError()
-        {
-            loginPage.IsErrorTextVisible();
+        [Then(@"I click ""Customers""")]
+        public void ClickCustomers() {
+            loginPage.ClickCustomers();
         }
 
         [Then(@"I should close Chrome")]
